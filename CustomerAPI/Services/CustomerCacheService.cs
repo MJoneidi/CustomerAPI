@@ -81,7 +81,7 @@ namespace CustomerAPI.Services
                         return i + 1;
                 }
             }
-            return 0;
+            return this.customers.Count;
         }
     }
 }

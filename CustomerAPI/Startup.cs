@@ -1,4 +1,6 @@
+using AutoMapper;
 using CustomerAPI.Configurations;
+using CustomerAPI.Mapper;
 using CustomerAPI.Persistence;
 using CustomerAPI.Services;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +32,11 @@ namespace CustomerAPI
             services.AddSingleton<IDataHandler, FileHandler>();
             services.AddSingleton<ICustomerCacheService, CustomerCacheService>();
             services.AddSingleton<IApplicationConfiguration, ApplicationConfiguration>();
+
+            services.AddScoped(provider => new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new MapperProfile());
+            }).CreateMapper());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

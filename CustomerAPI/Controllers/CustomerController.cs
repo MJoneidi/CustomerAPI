@@ -1,4 +1,5 @@
-﻿using CustomerAPI.Models;
+﻿using AutoMapper;
+using CustomerAPI.Models;
 using CustomerAPI.Models.Exceptions;
 using CustomerAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -16,12 +17,14 @@ namespace CustomerAPI.Controllers
     {
         private readonly ILogger<CustomerController> _logger;
         private readonly ICustomerCacheService _customerCacheService;
+        private readonly IMapper _mapper;
 
-        public CustomerController(ILogger<CustomerController> logger, ICustomerCacheService customerCacheService)
+        public CustomerController(ILogger<CustomerController> logger, ICustomerCacheService customerCacheService, IMapper mapper)
         {
             _logger = logger;
             _customerCacheService = customerCacheService;
-        }
+            _mapper = mapper;
+    }
 
         [HttpGet]
         public ActionResult<IEnumerable<Customer>> Get()
@@ -31,13 +34,14 @@ namespace CustomerAPI.Controllers
 
         [HttpPost]
         [Produces("application/json")]
-        public async Task<ActionResult> Post([FromBody] List<Customer> request)
+        public async Task<ActionResult> Post([FromBody] List<CustomerRequest> request)
         {
             try
             {
                 _logger.LogInformation($"Add Customer: {request.ToString()}");
-
-                await _customerCacheService.AddRangeAsync(request);
+              
+                var customers = _mapper.Map<List<Customer>>(request);
+                await _customerCacheService.AddRangeAsync(customers);
 
                 return Ok();
             }
