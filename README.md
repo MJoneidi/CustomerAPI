@@ -14,3 +14,6 @@ In order to read and write into this file, I defined it on appsettings.json,  "F
 Please make sure you have such this folder or just change it
 
 note : if you already notice my name in commit are differents, be aware it coming from git congif in my system and work envirment  
+
+First idea was, adding a Docker-Compse to make running the project more easy, but the time was so limited and I just skip it for now
+But just FYI: with adding docker file and in next step Kubernetes, scaling will be more accessible, there are some challange like internal array which need to ne sync between new instances. This problem can solve via using another services like Radis (cluster)
