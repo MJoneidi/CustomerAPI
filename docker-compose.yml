@@ -1,8 +1,0 @@
-version: '3.4'
-
-services:
-  testsimulator:
-    image: ${DOCKER_REGISTRY-}testsimulator
-    build:
-      context: .
-      dockerfile: TestSimulator/Dockerfile
